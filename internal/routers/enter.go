@@ -1,11 +1,9 @@
 package routers
 
-import (
-	"github.com/anle/codebase/internal/routers/user"
-)
+import "github.com/anle/codebase/internal/routers/authen"
 
 type RouterGroup struct {
-	User user.UserRouterGroup
+	Authen authen.AuthenRouter
 }
 
 var RouterGroupApp = new(RouterGroup)

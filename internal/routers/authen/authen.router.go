@@ -1,0 +1,20 @@
+package authen
+
+import (
+	"github.com/anle/codebase/internal/wire"
+	"github.com/gin-gonic/gin"
+)
+
+type AuthenRouter struct{}
+
+func (ar *AuthenRouter) InitAuthenRouter(router *gin.RouterGroup) {
+	//public router
+	authenController, _ := wire.InitAuthenRouterHandler()
+
+	AuthenRouterPublic := router.Group("/authen")
+
+	{
+		AuthenRouterPublic.POST("/register", authenController.Register)
+		AuthenRouterPublic.POST("/login", authenController.Login)
+	}
+}

@@ -28,32 +28,9 @@ func HandleResult(c *gin.Context, result int, data any) {
 
 	case ErrCodeLoginFail:
 		ErrorResponseExternal(c, result, nil)
-
-	case ErrCodeNegativeAmount:
-		ErrorResponseExternal(c, result, nil)
-
-	case ErrCodeNotEnoughBalance:
-		ErrorResponseExternal(c, result, nil)
-
-	case ErrCodeAccountNotExist:
-		ErrorResponseExternal(c, result, nil)
-
-	case ErrCodeGroupNotExist:
-		ErrorResponseExternal(c, result, nil)
-
-	case ErrCodePercentageExceed:
-		ErrorResponseExternal(c, result, nil)
-
-	case ErrCodeDistributionNotExist:
-		ErrorResponseExternal(c, result, nil)
-
-	case ErrCodeGroupNotFull:
-		ErrorResponseExternal(c, result, nil)
 	}
-
 }
 
-// success
 func SuccessResponse(c *gin.Context, code int, data any) {
 	c.JSON(http.StatusOK, ResponseData{
 		Code:    code,

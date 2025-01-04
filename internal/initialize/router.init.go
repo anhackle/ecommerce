@@ -18,13 +18,13 @@ func InitRouter() *gin.Engine {
 		r = gin.New()
 	}
 
-	userRouter := routers.RouterGroupApp.User
+	authenRouter := routers.RouterGroupApp.Authen
 
 	MainGroup := r.Group("/v1")
 	MainGroup.Use(middlewares.CORSMiddleware())
 
 	{
-		userRouter.InitUserRouter(MainGroup)
+		authenRouter.InitAuthenRouter(MainGroup)
 	}
 
 	return r

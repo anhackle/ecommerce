@@ -8,7 +8,6 @@ import (
 
 func InitValidator() {
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
-		//Register custom validation here
 		v.RegisterValidation("password", validation.ValidatePassword)
 	}
 }
