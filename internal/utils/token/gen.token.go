@@ -10,11 +10,6 @@ import (
 func GenJWTToken(userID int) (token string, err error) {
 	mySigningKey := []byte(global.Config.JWT.Key)
 
-	type MyCustomClaims struct {
-		UserID int `json:"userID"`
-		jwt.RegisteredClaims
-	}
-
 	claims := MyCustomClaims{
 		UserID: userID,
 		RegisteredClaims: jwt.RegisteredClaims{

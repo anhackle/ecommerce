@@ -18,7 +18,7 @@ func (ac *AuthenController) Register(c *gin.Context) {
 		return
 	}
 
-	result, _ := ac.authenService.Register(input)
+	result, _ := ac.authenService.Register(c, input)
 
 	response.HandleResult(c, result, nil)
 }
@@ -30,7 +30,7 @@ func (ac *AuthenController) Login(c *gin.Context) {
 		return
 	}
 
-	result, jwtToken, _ := ac.authenService.Login(input)
+	result, jwtToken, _ := ac.authenService.Login(c, input)
 
 	response.HandleResult(c, result, jwtToken)
 

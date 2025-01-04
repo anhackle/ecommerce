@@ -28,6 +28,9 @@ func HandleResult(c *gin.Context, result int, data any) {
 
 	case ErrCodeLoginFail:
 		ErrorResponseExternal(c, result, nil)
+
+	case ErrCodeNotAuthorize:
+		ErrorResponseNotAuthorize(c, result, nil)
 	}
 }
 
@@ -55,7 +58,7 @@ func ErrorResponseInternal(c *gin.Context, code int, data any) {
 	})
 }
 
-func ErrorResponseNoLogin(c *gin.Context, code int, data any) {
+func ErrorResponseNotAuthorize(c *gin.Context, code int, data any) {
 	c.JSON(http.StatusUnauthorized, ResponseData{
 		Code:    code,
 		Message: msg[code],
