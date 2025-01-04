@@ -7,13 +7,6 @@ import (
 	"gorm.io/gorm"
 )
 
-/*
-Config
-Redis
-Mysql
-...
-*/
-
 var (
 	Config setting.Config
 	Logger *logger.LoggerZap

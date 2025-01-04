@@ -9,13 +9,12 @@ import (
 	"github.com/google/wire"
 )
 
-func InitUserRouterHandler() (*controller.UserController, error) {
+func InitAuthenRouterHandler() (*controller.AuthenController, error) {
 	wire.Build(
-		repo.NewUserRepo,
-		repo.NewTokenRepo,
-		service.NewUserService,
-		controller.NewUserController,
+		repo.NewAuthenRepo,
+		service.NewAuthenService,
+		controller.NewAuthenController,
 	)
 
-	return new(controller.UserController), nil
+	return new(controller.AuthenController), nil
 }

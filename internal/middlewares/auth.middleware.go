@@ -1,53 +1,45 @@
 package middlewares
 
-import (
-	"strings"
+// var (
+// 	headerName = "Authorization"
+// )
 
-	service "github.com/anle/codebase/internal/services"
-	"github.com/anle/codebase/response"
-	"github.com/gin-gonic/gin"
-)
+// type AuthMiddleware struct {
+// 	authService service.IAuthService
+// }
 
-var (
-	headerName = "Authorization"
-)
+// func (am *AuthMiddleware) Authentication() gin.HandlerFunc {
+// 	return func(c *gin.Context) {
+// 		headerValue := c.GetHeader(headerName)
+// 		if headerValue == "" {
+// 			response.ErrorResponseNoLogin(c, response.ErrTokenInvalid, nil)
+// 			c.Abort()
+// 			return
+// 		}
 
-type AuthMiddleware struct {
-	authService service.IAuthService
-}
+// 		arrayHeaderValues := strings.Split(headerValue, " ")
+// 		if len(arrayHeaderValues) != 2 || arrayHeaderValues[0] != "Bearer" {
+// 			response.ErrorResponseNoLogin(c, response.ErrTokenInvalid, nil)
+// 			c.Abort()
+// 			return
+// 		}
 
-func (am *AuthMiddleware) Authentication() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		headerValue := c.GetHeader(headerName)
-		if headerValue == "" {
-			response.ErrorResponseNoLogin(c, response.ErrTokenInvalid, nil)
-			c.Abort()
-			return
-		}
+// 		accessToken := arrayHeaderValues[1]
+// 		userID, err := am.authService.Authentication(accessToken)
+// 		if err != nil {
+// 			response.ErrorResponseNoLogin(c, response.ErrTokenInvalid, nil)
+// 			c.Abort()
+// 			return
+// 		}
 
-		arrayHeaderValues := strings.Split(headerValue, " ")
-		if len(arrayHeaderValues) != 2 || arrayHeaderValues[0] != "Bearer" {
-			response.ErrorResponseNoLogin(c, response.ErrTokenInvalid, nil)
-			c.Abort()
-			return
-		}
+// 		c.Set("userID", userID)
 
-		accessToken := arrayHeaderValues[1]
-		userID, err := am.authService.Authentication(accessToken)
-		if err != nil {
-			response.ErrorResponseNoLogin(c, response.ErrTokenInvalid, nil)
-			c.Abort()
-			return
-		}
+// 		c.Next()
+// 	}
+// }
 
-		c.Set("userID", userID)
-
-		c.Next()
-	}
-}
-
-func NewAuthMiddleware(authService service.IAuthService) *AuthMiddleware {
-	return &AuthMiddleware{
-		authService: authService,
-	}
-}
+// func NewAuthMiddleware(authService service.IAuthService) *AuthMiddleware {
+// 	return &AuthMiddleware{
+// 		authService: authService,
+// 	}
+// }

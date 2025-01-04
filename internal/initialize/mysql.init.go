@@ -54,7 +54,7 @@ func SetPool() {
 func MigrateTable() {
 	err := global.Mdb.AutoMigrate(
 		&po.User{},
-		&po.Token{},
+		&po.UserInfo{},
 	)
 	if err != nil {
 		fmt.Println("Migrating tables error", err)
