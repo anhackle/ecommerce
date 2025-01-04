@@ -1,0 +1,5 @@
+config/dev.yaml
+config/production.yaml
+storages/logs/dev.001.log
+.vscode/*
+tests/*
