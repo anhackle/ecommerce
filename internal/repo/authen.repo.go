@@ -2,26 +2,26 @@ package repo
 
 import (
 	"context"
+	"database/sql"
 
-	"github.com/anle/codebase/global"
+	"github.com/anle/codebase/internal/database"
 	"github.com/anle/codebase/internal/model"
-	"github.com/anle/codebase/internal/po"
 )
 
 type IAuthenRepo interface {
 	CreateUser(ctx context.Context, userInput model.UserInput) (err error)
-	FindByEmail(ctx context.Context, input model.UserInput) (user po.User, err error)
+	FindByEmail(ctx context.Context, input model.UserInput) (user database.User, err error)
 }
 
-type authenRepo struct{}
+type authenRepo struct {
+	queries *database.Queries
+}
 
-func (ur *authenRepo) CreateUser(ctx context.Context, input model.UserInput) (err error) {
-	var userInput = &po.User{
+func (ar *authenRepo) CreateUser(ctx context.Context, input model.UserInput) (err error) {
+	_, err = ar.queries.CreateUser(ctx, database.CreateUserParams{
 		Email:    input.Email,
 		Password: input.Password,
-	}
-
-	err = global.Mdb.Model(&po.User{}).Create(&userInput).Error
+	})
 	if err != nil {
 		return err
 	}
@@ -29,15 +29,17 @@ func (ur *authenRepo) CreateUser(ctx context.Context, input model.UserInput) (er
 	return nil
 }
 
-func (ur *authenRepo) FindByEmail(ctx context.Context, input model.UserInput) (user po.User, err error) {
-	err = global.Mdb.Model(&po.User{}).Where("email = ?", input.Email).First(&user).Error
+func (ar *authenRepo) FindByEmail(ctx context.Context, input model.UserInput) (user database.User, err error) {
+	user, err = ar.queries.FindByEmail(ctx, input.Email)
 	if err != nil {
-		return po.User{}, err
+		return database.User{}, err
 	}
 
 	return user, nil
 }
 
-func NewAuthenRepo() IAuthenRepo {
-	return &authenRepo{}
+func NewAuthenRepo(dbConn *sql.DB) IAuthenRepo {
+	return &authenRepo{
+		queries: database.New(dbConn),
+	}
 }

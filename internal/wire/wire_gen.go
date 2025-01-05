@@ -7,15 +7,16 @@
 package wire
 
 import (
+	"database/sql"
 	"github.com/anle/codebase/internal/controller"
 	"github.com/anle/codebase/internal/repo"
-	"github.com/anle/codebase/internal/services"
+	"github.com/anle/codebase/internal/service"
 )
 
 // Injectors from authen.wire.go:
 
-func InitAuthenRouterHandler() (*controller.AuthenController, error) {
-	iAuthenRepo := repo.NewAuthenRepo()
+func InitAuthenRouterHandler(dbc *sql.DB) (*controller.AuthenController, error) {
+	iAuthenRepo := repo.NewAuthenRepo(dbc)
 	iAuthenService := service.NewAuthenService(iAuthenRepo)
 	authenController := controller.NewAuthenController(iAuthenService)
 	return authenController, nil

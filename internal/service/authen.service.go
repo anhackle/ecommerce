@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"database/sql"
 
 	"github.com/anle/codebase/internal/model"
 	"github.com/anle/codebase/internal/repo"
@@ -26,7 +27,7 @@ func (as *authenService) Register(ctx context.Context, input model.UserInput) (r
 		return response.ErrCodeUserHasExists, nil
 	}
 
-	if err != nil && err != gorm.ErrRecordNotFound {
+	if err != nil && err != sql.ErrNoRows {
 		return response.ErrCodeInternal, err
 	}
 
@@ -61,7 +62,7 @@ func (as *authenService) Login(ctx context.Context, input model.UserInput) (resu
 		return response.ErrCodeLoginFail, "", err
 	}
 
-	jwtToken, err = token.GenJWTToken(user.ID)
+	jwtToken, err = token.GenJWTToken(int(user.ID))
 	if err != nil {
 		return response.ErrCodeInternal, "", err
 	}

@@ -3,13 +3,15 @@
 package wire
 
 import (
+	"database/sql"
+
 	"github.com/anle/codebase/internal/controller"
 	"github.com/anle/codebase/internal/repo"
-	service "github.com/anle/codebase/internal/services"
+	"github.com/anle/codebase/internal/service"
 	"github.com/google/wire"
 )
 
-func InitAuthenRouterHandler() (*controller.AuthenController, error) {
+func InitAuthenRouterHandler(dbc *sql.DB) (*controller.AuthenController, error) {
 	wire.Build(
 		repo.NewAuthenRepo,
 		service.NewAuthenService,

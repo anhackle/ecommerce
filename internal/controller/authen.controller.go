@@ -2,7 +2,7 @@ package controller
 
 import (
 	"github.com/anle/codebase/internal/model"
-	service "github.com/anle/codebase/internal/services"
+	"github.com/anle/codebase/internal/service"
 	"github.com/anle/codebase/response"
 	"github.com/gin-gonic/gin"
 )
