@@ -55,6 +55,10 @@ func MigrateTable() {
 	err := global.Mdb.AutoMigrate(
 		&po.User{},
 		&po.UserInfo{},
+		&po.Product{},
+		&po.ProductDetail{},
+		&po.ProductImage{},
+		&po.Category{},
 	)
 	if err != nil {
 		fmt.Println("Migrating tables error", err)
