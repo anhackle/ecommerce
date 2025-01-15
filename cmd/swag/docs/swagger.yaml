@@ -1,0 +1,109 @@
+basePath: /v1
+definitions:
+  model.UserInput:
+    properties:
+      email:
+        maxLength: 50
+        type: string
+      password:
+        maxLength: 50
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  response.ResponseData:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+    type: object
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
+host: localhost:8082
+info:
+  contact:
+    email: nguyencaothai.vn@gmail.com
+    name: ITS Group Developer
+    url: https://github.com/anhackle/ecommerce
+  description: Ecomerce API.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: https://github.com/anhackle/ecommerce
+  title: Swagger Ecomerce API
+  version: "1.0"
+paths:
+  /authen/login:
+    post:
+      consumes:
+      - application/json
+      description: Login with Email & Password and return JWT
+      parameters:
+      - description: payload
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Login success
+          schema:
+            $ref: '#/definitions/response.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ResponseData'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.ResponseData'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ResponseData'
+      summary: Login API
+      tags:
+      - Authentication
+  /authen/register:
+    post:
+      consumes:
+      - application/json
+      description: Register user with Email & Password
+      parameters:
+      - description: payload
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Register success
+          schema:
+            $ref: '#/definitions/response.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ResponseData'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ResponseData'
+      summary: Register API
+      tags:
+      - Authentication
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

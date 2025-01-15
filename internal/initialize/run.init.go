@@ -1,6 +1,8 @@
 package initialize
 
-func Run() {
+import "github.com/gin-gonic/gin"
+
+func Run() *gin.Engine {
 	LoadConfig()
 	InitLogger()
 	InitMysql()
@@ -8,6 +10,7 @@ func Run() {
 	InitValidator()
 
 	r := InitRouter()
-	r.Run(":8082")
+
+	return r
 
 }
