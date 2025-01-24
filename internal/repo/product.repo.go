@@ -17,7 +17,7 @@ type productRepo struct{}
 func (pr *productRepo) GetProductsForMainPage(ctx context.Context, input model.ProductsMainPageInput) (products []po.Product, err error) {
 	err = global.Mdb.
 		Model(&po.Product{}).
-		Preload("ProductDetails").Preload("Images").Preload("Categories").
+		Preload("ProductDetails.Images").Preload("ProductCategories.Category").
 		Limit(input.PageSize).
 		Offset((input.Page - 1) * input.PageSize).
 		Find(&products).Error

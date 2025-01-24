@@ -8,17 +8,23 @@ import (
 )
 
 type ProductController struct {
-	productController service.IProductService
+	productService service.IProductService
 }
 
 func (pc *ProductController) ListProductMainPage(c *gin.Context) {
-	var input model.UserInput
+	var input model.ProductsMainPageInput
 	if err := c.ShouldBindJSON(&input); err != nil {
 		response.ErrorResponseExternal(c, response.ErrCodeExternal, nil)
 		return
 	}
 
-	result, _ := pc.authenService.Register(c, input)
+	result, output, _ := pc.productService.GetProductsForMainPage(c, input)
 
-	response.HandleResult(c, result, nil)
+	response.HandleResult(c, result, output)
+}
+
+func NewProductController(productService service.IProductService) *ProductController {
+	return &ProductController{
+		productService: productService,
+	}
 }

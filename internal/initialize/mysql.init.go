@@ -59,6 +59,7 @@ func MigrateTable() {
 		&po.ProductDetail{},
 		&po.ProductImage{},
 		&po.Category{},
+		&po.ProductCategory{},
 	)
 	if err != nil {
 		fmt.Println("Migrating tables error", err)

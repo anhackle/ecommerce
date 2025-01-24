@@ -9,26 +9,46 @@ import (
 )
 
 type IProductService interface {
-	GetProductsForMainPage(ctx context.Context, input model.ProductsMainPageInput) (result int, output []model.ProductsMainPageOutput, err error)
+	GetProductsForMainPage(ctx context.Context, input model.ProductsMainPageInput) (result int, output model.ProductsMainPageOutput, err error)
 }
 
 type productService struct {
 	productRepo repo.IProductRepo
 }
 
-func (ps *productService) GetProductsForMainPage(ctx context.Context, input model.ProductsMainPageInput) (result int, output []model.ProductsMainPageOutput, err error) {
+func (ps *productService) GetProductsForMainPage(ctx context.Context, input model.ProductsMainPageInput) (result int, output model.ProductsMainPageOutput, err error) {
 	products, err := ps.productRepo.GetProductsForMainPage(ctx, input)
 	if err != nil {
-		return response.ErrCodeInternal, []model.ProductsMainPageOutput{}, err
+		return response.ErrCodeInternal, model.ProductsMainPageOutput{}, err
 	}
 
+	productInfoList := []model.Product{}
+
 	for _, product := range products {
-		output = append(output, model.ProductsMainPageOutput{
-			Name:  product.Name,
-			Rate:  product.Rate,
-			Price: product.ProductDetails[1].Price,
-		})
+		productDetailList := []model.ProductDetail{}
+		for _, detail := range product.ProductDetails {
+			productDetailList = append(productDetailList, model.ProductDetail{
+				Color:    detail.Color,
+				Size:     detail.Size,
+				Quantity: detail.Quantity,
+				Price:    detail.Price,
+				Image:    detail.Images[0].URL,
+			})
+		}
+
+		productInfo := model.Product{
+			Name:           product.Name,
+			Description:    product.Description,
+			Rate:           product.Rate,
+			ProductDetails: productDetailList,
+		}
+
+		productInfoList = append(productInfoList, productInfo)
 	}
+
+	return response.ErrCodeSuccess, model.ProductsMainPageOutput{
+		Products: productInfoList,
+	}, nil
 
 }
 
