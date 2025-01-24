@@ -11,9 +11,9 @@ func (ar *ProductRouter) InitProductRouter(router *gin.RouterGroup) {
 	//public router
 	productController, _ := wire.InitProductRouterHandler()
 
-	productRouterPublic := router.Group("/product")
+	productRouterPublic := router.Group("/products")
 
 	{
-		productRouterPublic.POST("/get_list_products", productController.ListProductMainPage)
+		productRouterPublic.GET("/", productController.ListProductMainPage)
 	}
 }
