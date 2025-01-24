@@ -20,3 +20,12 @@ func InitAuthenRouterHandler() (*controller.AuthenController, error) {
 	authenController := controller.NewAuthenController(iAuthenService)
 	return authenController, nil
 }
+
+// Injectors from product.wire.go:
+
+func InitProductRouterHandler() (*controller.ProductController, error) {
+	iProductRepo := repo.NewProductRepo()
+	iProductService := service.NewProductService(iProductRepo)
+	productController := controller.NewProductController(iProductService)
+	return productController, nil
+}
