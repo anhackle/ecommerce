@@ -101,6 +101,44 @@ paths:
       summary: Register API
       tags:
       - Authentication
+  /products/:
+    get:
+      consumes:
+      - application/json
+      description: List products at main page by page & pagesize
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Number of products per page
+        in: query
+        name: pagesize
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ResponseData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ResponseData'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.ResponseData'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ResponseData'
+      summary: List products at main page
+      tags:
+      - Product
 securityDefinitions:
   BearerAuth:
     in: header
