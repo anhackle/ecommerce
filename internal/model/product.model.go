@@ -1,8 +1,8 @@
 package model
 
 type ProductsMainPageInput struct {
-	Page     int `json:"page" binding:"required,number,gt=0"`
-	PageSize int `json:"pagesize" binding:"required,number,gt=0,lt=9"`
+	Page     int `form:"page" binding:"required,number,gt=0"`
+	PageSize int `form:"pagesize" binding:"required,number,gt=0,lt=9"`
 }
 
 type ProductDetail struct {

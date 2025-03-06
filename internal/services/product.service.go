@@ -49,7 +49,6 @@ func (ps *productService) GetProductsForMainPage(ctx context.Context, input mode
 	return response.ErrCodeSuccess, model.ProductsMainPageOutput{
 		Products: productInfoList,
 	}, nil
-
 }
 
 func NewProductService(productRepo repo.IProductRepo) IProductService {
